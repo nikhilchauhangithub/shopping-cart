@@ -64,7 +64,7 @@ const AddButton = styled.div`
   right: 20px;
   width: 20px;
   height: 20px;
-  background: ${(props) => (props.isInCart ? '#e55336' : '#60695d')}
+  background: ${(props) => (props.isInCart ? '#E55336' : '#60c95d')};
   border-radius: 50%;
   padding: 5px;
   cursor: pointer;
