@@ -1,7 +1,18 @@
 import styled from 'styled-components';
+import useShop from './context/ShopContext';
+import ProductCard from './ProductCard';
 
 const Cart = () => {
-  return <Title>Your cart total is 300.00$</Title>;
+  const { products, total } = useShop();
+
+  return (
+    <>
+      <Title>Your cart total is {total}.00$</Title>
+      {products.map((product, index) => (
+        <ProductCard {...product} />
+      ))}
+    </>
+  );
 };
 
 export default Cart;

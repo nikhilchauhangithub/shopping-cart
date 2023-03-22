@@ -1,10 +1,34 @@
+import { useEffect, useState } from 'react';
 import styled from 'styled-components';
-
+import useShop from './context/ShopContext';
 const ProductCard = ({ name, imageUrl, price }) => {
+  const { products, addToCart, removeFromCart } = useShop();
+  const [isInCart, setInCart] = useState(false);
+
+  useEffect(() => {
+    const productIsInCart = products.find((product) => product.name === name);
+
+    if (productIsInCart) {
+      setInCart(true);
+    } else {
+      setInCart(false);
+    }
+  }, [products, name]);
+
+  const handleClick = () => {
+    const product = { name, imageUrl, price };
+
+    if (isInCart) {
+      removeFromCart(product);
+    } else {
+      addToCart(product);
+    }
+  };
+
   return (
     <Wrapper background={imageUrl}>
-      <AddButton onClick={() => console.log(`Added ${name} to cart`)}>
-        <p>+</p>
+      <AddButton isInCart={isInCart} onClick={handleClick}>
+        <p>{isInCart ? '-' : '+'}</p>
       </AddButton>
       <TextContainer>
         <Title>{name}</Title>
@@ -40,7 +64,7 @@ const AddButton = styled.div`
   right: 20px;
   width: 20px;
   height: 20px;
-  background: #60c95d;
+  background: ${(props) => (props.isInCart ? '#e55336' : '#60695d')}
   border-radius: 50%;
   padding: 5px;
   cursor: pointer;

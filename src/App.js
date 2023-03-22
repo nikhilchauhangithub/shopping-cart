@@ -1,30 +1,32 @@
 import styled from 'styled-components';
 import { BrowserRouter, Routes, Route, Link } from 'react-router-dom';
-
+import { ShopProvider } from './context/ShopContext';
 import Products from './Products';
 import Cart from './Cart';
 
 const App = () => {
   return (
-    <BrowserRouter>
-      <Wrapper>
-        <TitleWrapper>
-          <h1>useReducer Hook Starter Project</h1>
-        </TitleWrapper>
-        <LinksWrapper>
-          <Link to="/">Home</Link>
-          <Link to="/cart">Cart</Link>
-        </LinksWrapper>
-        <Routes>
-          <Route>
-            <>
-              <Route exact path="/" element={<Products />} />
-              <Route exact path="/cart" element={<Cart />} />
-            </>
-          </Route>
-        </Routes>
-      </Wrapper>
-    </BrowserRouter>
+    <ShopProvider>
+      <BrowserRouter>
+        <Wrapper>
+          <TitleWrapper>
+            <h1>useReducer Hook Starter Project</h1>
+          </TitleWrapper>
+          <LinksWrapper>
+            <Link to="/">Home</Link>
+            <Link to="/cart">Cart</Link>
+          </LinksWrapper>
+          <Routes>
+            <Route>
+              <>
+                <Route exact path="/" element={<Products />} />
+                <Route exact path="/cart" element={<Cart />} />
+              </>
+            </Route>
+          </Routes>
+        </Wrapper>
+      </BrowserRouter>
+    </ShopProvider>
   );
 };
 

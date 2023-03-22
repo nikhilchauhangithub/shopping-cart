@@ -32,3 +32,5 @@ const shopReducer = (state, action) => {
       throw new Error('No case for type ${type} found in shopReducer');
   }
 };
+
+export default shopReducer;

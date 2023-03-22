@@ -1,32 +1,32 @@
-import { createContext, useReducer } from 'react';
-import { initialState } from './shopReducer';
-import shopReducer from './shopReducer';
+import { createContext, useReducer, useContext } from 'react';
+import shopReducer, { initialState } from './shopReducer';
+
 const ShopContext = createContext(initialState);
 
 export const ShopProvider = ({ children }) => {
   const [state, dispatch] = useReducer(shopReducer, initialState);
 
   const addToCart = (product) => {
-    const updateCart = state.product.concat(product);
-    updatePrice(updateCart);
-
+    const updatedCart = state.products.concat(product);
+    updatePrice(updatedCart);
     dispatch({
       type: 'ADD_TO_CART',
       payload: {
-        product: updateCart,
+        products: updatedCart,
       },
     });
   };
 
   const removeFromCart = (product) => {
-    const updateCart = state.products.filter(
+    const updatedCart = state.products.filter(
       (currentProduct) => currentProduct.name !== product.name
     );
+    updatePrice(updatedCart);
 
     dispatch({
       type: 'REMOVE_FROM_CART',
       payload: {
-        product: updateCart,
+        products: updatedCart,
       },
     });
   };
@@ -49,4 +49,17 @@ export const ShopProvider = ({ children }) => {
     addToCart,
     removeFromCart,
   };
+  return <ShopContext.Provider value={value}>{children}</ShopContext.Provider>;
 };
+
+const useShop = () => {
+  const context = useContext(ShopContext);
+
+  if (context === undefined) {
+    throw new Error('useShop must be used within ShopContext');
+  }
+
+  return context;
+};
+
+export default useShop;
